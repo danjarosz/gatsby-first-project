@@ -9,6 +9,6 @@ const IndexPage = () => {
       </h2>
     </div>
   )
-}
+};
 
 export default IndexPage;

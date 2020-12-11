@@ -9,6 +9,6 @@ const BlogPage = () => {
       </p>
     </div>
   )
-}
+};
 
 export default BlogPage;
