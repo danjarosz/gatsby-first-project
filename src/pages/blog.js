@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../components/footer';
 
 const BlogPage = () => {
   return (
@@ -7,6 +8,7 @@ const BlogPage = () => {
       <p>
         Posts will show up here later on.
       </p>
+      <Footer />
     </div>
   )
 };
