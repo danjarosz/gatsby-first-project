@@ -17,5 +17,12 @@ module.exports = {
         implementation: require("sass"),
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `src`,
+        path: `${__dirname}/src/`,
+      },
+    }
   ],
 }
