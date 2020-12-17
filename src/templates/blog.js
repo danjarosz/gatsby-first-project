@@ -3,6 +3,12 @@ import { graphql } from 'gatsby';
 import Layout from "../components/layout";
 
 
+// // Searching the posts given from CMS (Contentify)
+// export const query = graphql`
+
+// `
+
+// Searchnig the posts given as markdown
 // slug variable comes from pageContext
 export const query = graphql`
   query (

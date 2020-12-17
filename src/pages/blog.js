@@ -4,43 +4,85 @@ import Layout from "../components/layout";
 import blogStyles from "./blog.module.scss";
 
 const BlogPage = () => {
+
+  //-------------------------------------------------
+  // // Searchnig the posts given as markdown
+  // const data = useStaticQuery(graphql`
+  //   query {
+  //     allMarkdownRemark {
+  //       edges {
+  //         node {
+  //           frontmatter {
+  //             title
+  //             date
+  //           }
+  //           fields {
+  //             slug
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // `);
+
+  // const posts = data.allMarkdownRemark.edges;
+  // const postItems = posts.map(post => {
+  //   const { node: { 
+  //     frontmatter: { 
+  //       title, date 
+  //     },
+  //     fields: {
+  //       slug
+  //     } 
+  //   } } = post;
+  //   return (
+  //     <li key={title} className={blogStyles.post}>
+  //       <Link to={`/blog/${slug}`}>
+  //         <h2>{title}</h2>
+  //         <p>{date}</p>
+  //       </Link>
+  //     </li>
+  //   )
+  // });
+  //-------------------------------------------------
+
+  // Searchnig the posts given from CMS (Contentify)
   const data = useStaticQuery(graphql`
     query {
-      allMarkdownRemark {
+      allContentfulBlogPost (
+        sort: {
+          fields:publishedDate
+          order:DESC
+        }
+      ) {
         edges {
           node {
-            frontmatter {
-              title
-              date
-            }
-            fields {
-              slug
-            }
+            title
+            slug,
+            publishedDate(formatString: "MMMM Do, YYYY")
           }
         }
       }
     }
   `);
 
-  const posts = data.allMarkdownRemark.edges;
+  const posts = data.allContentfulBlogPost.edges;
   const postItems = posts.map(post => {
     const { node: { 
-      frontmatter: { 
-        title, date 
-      },
-      fields: {
-        slug
-      } 
+      title,
+      publishedDate, 
+      slug
     } } = post;
+
     return (
       <li key={title} className={blogStyles.post}>
         <Link to={`/blog/${slug}`}>
           <h2>{title}</h2>
-          <p>{date}</p>
+          <p>{publishedDate}</p>
         </Link>
       </li>
     )
-  })
+  });
 
   return (
     <Layout>
