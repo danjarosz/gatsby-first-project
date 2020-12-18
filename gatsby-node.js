@@ -67,7 +67,6 @@ module.exports.createPages = async ({ graphql, actions }) => {
   //-------------------------------------
   //3b from CMS (Contentful)
   res.data.allContentfulBlogPost.edges.forEach((edge) => {
-    console.log(edge)
     createPage({
       component: blogTemplate,
       path: `/blog/${edge.node.slug}`,

@@ -1,5 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import Layout from "../components/layout";
 
 
@@ -7,8 +8,11 @@ import Layout from "../components/layout";
 export const query = graphql`
   query($slug: String) {
     contentfulBlogPost(slug: {eq: $slug}) {
-      title,
+      title
       publishedDate(formatString: "MMMM Do, YYYY")
+      body {
+        raw
+      }
     }
   }
 `
@@ -39,13 +43,16 @@ export const query = graphql`
   // data comes from the query from above and it is given with props 
   const { data } = props;
 
-  const {title, publishedDate} = data.contentfulBlogPost;
+  const {title, publishedDate, body: { raw }} = data.contentfulBlogPost;
 
+  const rawPostData = JSON.parse(raw);
+  const content = documentToReactComponents(rawPostData);
 
   return (
     <Layout>
       <h1>{title}</h1>
       <p>{publishedDate}</p>
+      {content}
     </Layout>
   )
 
