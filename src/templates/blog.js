@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import Layout from "../components/layout";
+import Head from "../components/head";
 
 
 // // Searching the posts given from CMS (Contentify)
@@ -70,6 +71,7 @@ export const query = graphql`
 
   return (
     <Layout>
+      <Head title={title}/>
       <h1>{title}</h1>
       <p>{publishedDate}</p>
       {content}
