@@ -15,6 +15,7 @@ module.exports = {
     author: 'Daniel Jarosz'
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-contentful`,
       options: {
