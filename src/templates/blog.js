@@ -11,7 +11,14 @@ export const query = graphql`
       title
       publishedDate(formatString: "MMMM Do, YYYY")
       body {
-        raw
+        raw,
+        references {
+          file {
+           url
+          }
+          title
+          contentful_id
+        }
       }
     }
   }
@@ -43,10 +50,23 @@ export const query = graphql`
   // data comes from the query from above and it is given with props 
   const { data } = props;
 
-  const {title, publishedDate, body: { raw }} = data.contentfulBlogPost;
+  const {title, publishedDate, body: { raw, references }} = data.contentfulBlogPost;
 
   const rawPostData = JSON.parse(raw);
-  const content = documentToReactComponents(rawPostData);
+
+  const options = {
+    renderNode: {
+      "embedded-asset-block": (node) => {
+        const nodeId = node.data.target.sys.id;
+        const assetData = references.filter(reference => reference.contentful_id === nodeId)[0];
+        const alt = assetData.title
+        const url = assetData.file.url
+        return <img alt={alt} src={url}/>
+      }
+    }
+  };
+
+  const content = documentToReactComponents(rawPostData, options);
 
   return (
     <Layout>
